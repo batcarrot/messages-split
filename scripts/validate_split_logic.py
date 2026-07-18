@@ -27,17 +27,37 @@ class Expense:
     amount_cents: int
     paid_by_id: str
     shares: List[ExpenseShare]
+    details: str | None = None
+    kind: str = "expense"
     id: str = field(default_factory=lambda: str(uuid4()))
 
     @classmethod
     def equal_split(
-        cls, title: str, amount_cents: int, paid_by_id: str, participant_ids: List[str]
+        cls,
+        title: str,
+        amount_cents: int,
+        paid_by_id: str,
+        participant_ids: List[str],
+        details: str | None = None,
     ) -> "Expense":
         amounts = equal_shares(amount_cents, len(participant_ids))
         shares = [
             ExpenseShare(pid, amt) for pid, amt in zip(participant_ids, amounts)
         ]
-        return cls(title, amount_cents, paid_by_id, shares)
+        return cls(title, amount_cents, paid_by_id, shares, details=details)
+
+    @classmethod
+    def settlement(
+        cls, from_id: str, to_id: str, amount_cents: int, note: str | None = None
+    ) -> "Expense":
+        return cls(
+            title="Settlement",
+            amount_cents=amount_cents,
+            paid_by_id=from_id,
+            shares=[ExpenseShare(to_id, amount_cents)],
+            details=note,
+            kind="settlement",
+        )
 
 
 @dataclass
@@ -122,6 +142,29 @@ class SplitLogicTests(unittest.TestCase):
             for count in range(1, 8):
                 shares = equal_shares(total, count)
                 self.assertEqual(sum(shares), total, f"{total}/{count}")
+
+    def test_settlement_clears_debt(self):
+        ledger = Ledger(
+            participants=["a", "b"],
+            expenses=[
+                Expense.equal_split("Taxi", 4000, "a", ["a", "b"], details="Uber"),
+                Expense.settlement("b", "a", 2000, note="Apple Pay"),
+            ],
+        )
+        self.assertEqual(net_balances(ledger), {"a": 0, "b": 0})
+        self.assertEqual(simplified_debts(ledger), [])
+
+    def test_subset_of_people_on_bill(self):
+        ledger = Ledger(
+            participants=["a", "b", "c"],
+            expenses=[
+                Expense.equal_split("Dinner", 9000, "a", ["a", "b"]),
+            ],
+        )
+        nets = net_balances(ledger)
+        self.assertEqual(nets["a"], 4500)
+        self.assertEqual(nets["b"], -4500)
+        self.assertEqual(nets["c"], 0)
 
 
 if __name__ == "__main__":

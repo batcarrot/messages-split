@@ -29,5 +29,7 @@
 	</dict>
 	<key>MSMessagesExtensionStoreIconName</key>
 	<string>AppIcon</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Split attaches receipt photos to bills you share in Messages.</string>
 </dict>
 </plist>

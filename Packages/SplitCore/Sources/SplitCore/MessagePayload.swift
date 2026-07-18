@@ -26,8 +26,17 @@ public struct MessagePayload: Codable, Hashable, Sendable {
     public static func makeSummary(ledger: GroupLedger, expense: Expense? = nil) -> String {
         if let expense {
             let money = Money(cents: expense.amountCents, currencyCode: expense.currencyCode)
+            if expense.kind == .settlement {
+                let from = ledger.displayName(for: expense.paidById)
+                let to = ledger.displayName(for: expense.shares.first?.participantId ?? "")
+                let via = expense.paymentMethod == .applePay ? " via Apple Pay" : ""
+                return "\(from) paid \(to) \(money.formatted)\(via)"
+            }
             let payer = ledger.displayName(for: expense.paidById)
             let count = expense.shares.count
+            if expense.hasImage {
+                return "\(expense.title) · \(money.formatted) · paid by \(payer) · split \(count) ways · photo"
+            }
             return "\(expense.title) · \(money.formatted) · paid by \(payer) · split \(count) ways"
         }
 

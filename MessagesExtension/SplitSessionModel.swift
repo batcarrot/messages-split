@@ -1,18 +1,26 @@
 import Foundation
-import SplitCore
 import Messages
+import SplitCore
 import SwiftUI
+import UIKit
 
 @MainActor
 final class SplitSessionModel: ObservableObject {
     @Published var ledger = GroupLedger(groupId: "empty")
     @Published var localParticipantId = ""
     @Published var presentationStyle: MSMessagesAppPresentationStyle = .compact
+
     @Published var draftTitle = ""
+    @Published var draftDetails = ""
     @Published var draftAmountText = ""
     @Published var draftPaidById = ""
     @Published var selectedParticipantIds: Set<String> = []
+    @Published var draftImage: UIImage?
     @Published var errorMessage: String?
+    @Published var infoMessage: String?
+
+    private let imageStore = ImageStore(appGroupID: SplitCoreInfo.appGroupID)
+    private let applePay = ApplePaySettler()
 
     var onSendExpense: ((Expense) -> Void)?
     var onSendBalances: (() -> Void)?
@@ -32,6 +40,29 @@ final class SplitSessionModel: ObservableObject {
 
     var personalBalanceCents: Int {
         BalanceEngine.personalBalance(viewerId: localParticipantId, ledger: ledger)
+    }
+
+    /// Debts the local user currently owes.
+    var myPayableSettlements: [Settlement] {
+        settlements.filter { $0.fromId == localParticipantId }
+    }
+
+    var selectedPeopleSummary: String {
+        let names = participants
+            .filter { selectedParticipantIds.contains($0.id) }
+            .map(\.displayName)
+        if names.isEmpty { return "No one selected" }
+        if names.count == participants.count { return "Everyone (\(names.count))" }
+        return names.joined(separator: ", ")
+    }
+
+    var draftPerPersonCents: Int? {
+        guard selectedParticipantIds.count > 0,
+              let amount = parsedAmountCents() else { return nil }
+        return MoneySplitter.equalShares(
+            totalCents: amount,
+            count: selectedParticipantIds.count
+        ).first
     }
 
     func configure(
@@ -56,20 +87,19 @@ final class SplitSessionModel: ObservableObject {
 
     func submitExpense() {
         errorMessage = nil
-        let cleaned = draftAmountText
-            .replacingOccurrences(of: "$", with: "")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let amount = Decimal(string: cleaned), amount > 0 else {
+        infoMessage = nil
+
+        guard let amountCents = parsedAmountCents(), amountCents > 0 else {
             errorMessage = "Enter a valid amount."
             return
         }
         let title = draftTitle.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !title.isEmpty else {
-            errorMessage = "Add a short description."
+            errorMessage = "Add a title for this bill."
             return
         }
         guard !selectedParticipantIds.isEmpty else {
-            errorMessage = "Pick at least one person to split with."
+            errorMessage = "Select at least one person on this bill."
             return
         }
         guard participants.contains(where: { $0.id == draftPaidById }) else {
@@ -77,18 +107,40 @@ final class SplitSessionModel: ObservableObject {
             return
         }
 
-        let money = Money(amount: amount, currencyCode: ledger.currencyCode)
+        let details = draftDetails.trimmingCharacters(in: .whitespacesAndNewlines)
+        let expenseId = UUID()
+        var imageFileName: String?
+        var hasImage = false
+
+        if let draftImage,
+           let data = ImageStore.compressedJPEG(from: draftImage) {
+            imageFileName = imageStore.saveJPEG(data: data, expenseId: expenseId)
+            hasImage = imageFileName != nil
+        }
+
         let orderedIds = participants.map(\.id).filter { selectedParticipantIds.contains($0) }
         let expense = Expense.equalSplit(
+            id: expenseId,
             title: title,
-            amountCents: money.cents,
+            details: details.isEmpty ? nil : details,
+            amountCents: amountCents,
             paidById: draftPaidById,
             participantIds: orderedIds,
-            currencyCode: ledger.currencyCode
+            currencyCode: ledger.currencyCode,
+            imageFileName: imageFileName,
+            hasImage: hasImage
         )
+
         onSendExpense?(expense)
+        clearDraft()
+    }
+
+    func clearDraft() {
         draftTitle = ""
+        draftDetails = ""
         draftAmountText = ""
+        draftImage = nil
+        errorMessage = nil
     }
 
     func toggleParticipant(_ id: String) {
@@ -97,6 +149,14 @@ final class SplitSessionModel: ObservableObject {
         } else {
             selectedParticipantIds.insert(id)
         }
+    }
+
+    func selectAllParticipants() {
+        selectedParticipantIds = Set(participants.map(\.id))
+    }
+
+    func clearSelectedParticipants() {
+        selectedParticipantIds.removeAll()
     }
 
     func renameParticipant(id: String, to name: String) {
@@ -108,6 +168,65 @@ final class SplitSessionModel: ObservableObject {
         onLedgerChanged?(ledger)
     }
 
+    func image(for expense: Expense) -> UIImage? {
+        guard let fileName = expense.imageFileName,
+              let data = imageStore.loadData(fileName: fileName) else { return nil }
+        return UIImage(data: data)
+    }
+
+    // MARK: - Settlements / Apple Pay
+
+    func settleWithApplePay(_ settlement: Settlement) {
+        errorMessage = nil
+        infoMessage = nil
+        let toName = ledger.displayName(for: settlement.toId)
+        applePay.settle(
+            amountCents: settlement.amountCents,
+            currencyCode: ledger.currencyCode,
+            label: "Split · pay \(toName)"
+        ) { [weak self] result in
+            Task { @MainActor in
+                self?.handleApplePay(result, settlement: settlement)
+            }
+        }
+    }
+
+    func settleManually(_ settlement: Settlement) {
+        recordSettlement(settlement, method: .manual, note: "Marked paid")
+    }
+
+    private func handleApplePay(_ result: ApplePaySettleResult, settlement: Settlement) {
+        switch result {
+        case .success:
+            recordSettlement(settlement, method: .applePay, note: "Paid with Apple Pay")
+        case .cancelled:
+            break
+        case .unavailable(let message):
+            // Wallet history / peer Apple Cash isn't available via public API.
+            // Fall back to manual settle when merchant Pay isn't set up yet.
+            infoMessage = message + " You can mark it paid manually."
+        case .failed(let message):
+            errorMessage = message
+        }
+    }
+
+    private func recordSettlement(
+        _ settlement: Settlement,
+        method: PaymentMethod,
+        note: String
+    ) {
+        let expense = Expense.settlement(
+            fromId: settlement.fromId,
+            toId: settlement.toId,
+            amountCents: settlement.amountCents,
+            currencyCode: ledger.currencyCode,
+            method: method,
+            note: note
+        )
+        onSendExpense?(expense)
+        infoMessage = method == .applePay ? "Apple Pay settlement sent." : "Marked as paid."
+    }
+
     func sendBalances() {
         onSendBalances?()
     }
@@ -117,5 +236,13 @@ final class SplitSessionModel: ObservableObject {
 
     func moneyString(_ cents: Int) -> String {
         Money(cents: abs(cents), currencyCode: ledger.currencyCode).formatted
+    }
+
+    private func parsedAmountCents() -> Int? {
+        let cleaned = draftAmountText
+            .replacingOccurrences(of: "$", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let amount = Decimal(string: cleaned), amount > 0 else { return nil }
+        return Money(amount: amount, currencyCode: ledger.currencyCode).cents
     }
 }

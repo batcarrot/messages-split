@@ -106,6 +106,41 @@ final class BalanceEngineTests: XCTestCase {
         XCTAssertEqual(decoded.highlightExpenseId, expense.id)
     }
 
+    func testSettlementClearsDebt() {
+        var ledger = GroupLedger(
+            groupId: "chat-1",
+            participants: [
+                Participant(id: "a", displayName: "Alex"),
+                Participant(id: "b", displayName: "Blake")
+            ]
+        )
+        ledger.addExpense(
+            .equalSplit(title: "Taxi", amountCents: 4000, paidById: "a", participantIds: ["a", "b"])
+        )
+        ledger.addExpense(
+            .settlement(fromId: "b", toId: "a", amountCents: 2000, method: .applePay)
+        )
+
+        let nets = BalanceEngine.netBalances(for: ledger)
+        XCTAssertEqual(nets["a"], 0)
+        XCTAssertEqual(nets["b"], 0)
+        XCTAssertTrue(BalanceEngine.simplifiedDebts(for: ledger).isEmpty)
+    }
+
+    func testExpenseKeepsOptionalDetailsAndImageFlag() {
+        let expense = Expense.equalSplit(
+            title: "Brunch",
+            details: "Saturday at Lighthouse",
+            amountCents: 6000,
+            paidById: "a",
+            participantIds: ["a", "b"],
+            hasImage: true
+        )
+        XCTAssertEqual(expense.details, "Saturday at Lighthouse")
+        XCTAssertTrue(expense.hasImage)
+        XCTAssertEqual(expense.shares.count, 2)
+    }
+
     func testLedgerMergeKeepsUniqueExpenses() {
         let store = LedgerStore(defaults: UserDefaults(suiteName: "test.\(UUID().uuidString)")!)
         var local = GroupLedger(groupId: "g", participants: [Participant(id: "a", displayName: "A")])

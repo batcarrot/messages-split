@@ -83,26 +83,57 @@ struct ActivityView: View {
                         .padding(.top, 24)
                 } else {
                     ForEach(model.ledger.expenses.reversed()) { expense in
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text(expense.title)
-                                    .font(.system(.headline, design: .rounded))
-                                Spacer()
-                                Text(Money(cents: expense.amountCents, currencyCode: expense.currencyCode).formatted)
-                                    .font(.system(.headline, design: .rounded))
-                            }
-                            Text("Paid by \(model.ledger.displayName(for: expense.paidById)) · split \(expense.shares.count) ways")
-                                .font(.system(.caption, design: .rounded))
-                                .foregroundStyle(.secondary)
-                        }
-                        .padding(14)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(.white.opacity(0.7), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        expenseRow(expense)
                     }
                 }
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 24)
         }
+    }
+
+    private func expenseRow(_ expense: Expense) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if let image = model.image(for: expense) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 120)
+                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            }
+
+            HStack(alignment: .firstTextBaseline) {
+                Text(expense.title)
+                    .font(.system(.headline, design: .rounded))
+                Spacer()
+                Text(Money(cents: expense.amountCents, currencyCode: expense.currencyCode).formatted)
+                    .font(.system(.headline, design: .rounded))
+            }
+
+            if let details = expense.details, !details.isEmpty {
+                Text(details)
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundStyle(SplitTheme.ink.opacity(0.75))
+            }
+
+            if expense.kind == .settlement {
+                let to = model.ledger.displayName(for: expense.shares.first?.participantId ?? "")
+                let via = expense.paymentMethod == .applePay ? " · Apple Pay" : " · manual"
+                Text("\(model.ledger.displayName(for: expense.paidById)) paid \(to)\(via)")
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundStyle(.secondary)
+            } else {
+                let names = expense.shares
+                    .map { model.ledger.displayName(for: $0.participantId) }
+                    .joined(separator: ", ")
+                Text("Paid by \(model.ledger.displayName(for: expense.paidById)) · \(names)")
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.white.opacity(0.7), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }

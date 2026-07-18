@@ -38,6 +38,8 @@ targets:
       properties:
         com.apple.security.application-groups:
           - group.com.batcarrot.messages-split
+        com.apple.developer.in-app-payments:
+          - merchant.com.batcarrot.messages-split
     dependencies:
       - target: MessagesExtension
       - package: SplitCore
@@ -65,10 +67,14 @@ targets:
       properties:
         com.apple.security.application-groups:
           - group.com.batcarrot.messages-split
+        com.apple.developer.in-app-payments:
+          - merchant.com.batcarrot.messages-split
     dependencies:
       - package: SplitCore
       - sdk: Messages.framework
       - sdk: SwiftUI.framework
+      - sdk: PassKit.framework
+      - sdk: PhotosUI.framework
 
 schemes:
   SplitMessages:

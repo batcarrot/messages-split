@@ -134,7 +134,14 @@ final class MessagesViewController: MSMessagesAppViewController {
             highlightExpenseId: expense.id,
             summary: summary
         )
-        insertMessage(payload: payload, conversation: conversation, caption: summary)
+        insertMessage(
+            payload: payload,
+            conversation: conversation,
+            caption: summary,
+            title: expense.title,
+            details: expense.details,
+            expenseImage: model.image(for: expense)
+        )
     }
 
     private func sendBalances(in conversation: MSConversation) {
@@ -147,17 +154,23 @@ final class MessagesViewController: MSMessagesAppViewController {
     private func insertMessage(
         payload: MessagePayload,
         conversation: MSConversation,
-        caption: String
+        caption: String,
+        title: String? = nil,
+        details: String? = nil,
+        expenseImage: UIImage? = nil
     ) {
         guard let url = try? payload.makeURL() else { return }
 
         let session = conversation.selectedMessage?.session ?? MSSession()
         let message = MSMessage(session: session)
         let layout = MSMessageTemplateLayout()
-        layout.caption = "Split"
+        layout.caption = title ?? "Split"
         layout.subcaption = caption
+        if let details, !details.isEmpty {
+            layout.trailingSubcaption = details
+        }
         layout.trailingCaption = balanceTrailingCaption()
-        layout.image = renderBubbleImage(caption: caption)
+        layout.image = expenseImage ?? renderBubbleImage(caption: caption)
         message.layout = layout
         message.url = url
         message.summaryText = caption
