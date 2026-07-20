@@ -53,7 +53,7 @@ struct AddExpenseView: View {
             .padding(.bottom, isEditing ? 24 : 0)
         }
         .scrollDismissesKeyboard(.interactively)
-        .dismissKeyboardToolbar(isFocused: isEditing) {
+        .dismissKeyboardToolbar {
             endEditing()
         }
         .safeAreaInset(edge: .bottom) {
