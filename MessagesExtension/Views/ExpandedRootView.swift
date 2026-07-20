@@ -25,6 +25,9 @@ struct ExpandedRootView: View {
                     }
                     .pickerStyle(.segmented)
                     .padding()
+                    .onChange(of: tab) { _ in
+                        Keyboard.dismiss()
+                    }
 
                     Group {
                         switch tab {
@@ -54,9 +57,12 @@ struct ExpandedRootView: View {
                     .foregroundStyle(SplitTheme.ink.opacity(0.75))
             }
             Spacer()
-            Button("Done") { model.compact() }
-                .font(.system(.body, design: .rounded).weight(.semibold))
-                .foregroundStyle(SplitTheme.forest)
+            Button("Done") {
+                Keyboard.dismiss()
+                model.compact()
+            }
+            .font(.system(.body, design: .rounded).weight(.semibold))
+            .foregroundStyle(SplitTheme.forest)
         }
         .padding(.horizontal, 20)
         .padding(.top, 12)

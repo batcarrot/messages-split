@@ -8,9 +8,11 @@ struct AddExpenseView: View {
     @FocusState private var focusedField: Field?
     @State private var photoItem: PhotosPickerItem?
 
-    private enum Field {
+    private enum Field: Hashable {
         case amount, title, details
     }
+
+    private var isEditing: Bool { focusedField != nil }
 
     var body: some View {
         ScrollView {
@@ -35,6 +37,7 @@ struct AddExpenseView: View {
                 }
 
                 Button {
+                    endEditing()
                     model.submitExpense()
                 } label: {
                     Text("Split & send in Messages")
@@ -47,13 +50,53 @@ struct AddExpenseView: View {
                 .buttonStyle(.plain)
             }
             .padding(20)
+            .padding(.bottom, isEditing ? 24 : 0)
         }
-        .onAppear { focusedField = .amount }
+        .scrollDismissesKeyboard(.interactively)
+        .dismissKeyboardToolbar(isFocused: isEditing) {
+            endEditing()
+        }
+        .safeAreaInset(edge: .bottom) {
+            if isEditing {
+                HStack {
+                    Text(editingHint)
+                        .font(.system(.footnote, design: .rounded))
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Done") {
+                        endEditing()
+                    }
+                    .font(.system(.body, design: .rounded).weight(.semibold))
+                    .foregroundStyle(SplitTheme.forest)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 8)
+                    .background(.white.opacity(0.92), in: Capsule())
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .background(.ultraThinMaterial)
+            }
+        }
         .onChange(of: photoItem) { newItem in
+            endEditing()
             Task {
                 await loadPhoto(from: newItem)
             }
         }
+    }
+
+    private var editingHint: String {
+        switch focusedField {
+        case .amount: return "Enter the amount"
+        case .title: return "Name this bill"
+        case .details: return "Optional note"
+        case .none: return ""
+        }
+    }
+
+    private func endEditing() {
+        focusedField = nil
+        Keyboard.dismiss()
     }
 
     private var amountField: some View {
@@ -66,6 +109,8 @@ struct AddExpenseView: View {
                 .font(.system(size: 44, weight: .bold, design: .rounded))
                 .foregroundStyle(SplitTheme.ink)
                 .focused($focusedField, equals: .amount)
+                .submitLabel(.done)
+                .onSubmit { endEditing() }
         }
     }
 
@@ -79,6 +124,8 @@ struct AddExpenseView: View {
                 .padding(12)
                 .background(.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                 .focused($focusedField, equals: .title)
+                .submitLabel(.done)
+                .onSubmit { endEditing() }
         }
     }
 
@@ -98,6 +145,8 @@ struct AddExpenseView: View {
                 .padding(12)
                 .background(.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                 .focused($focusedField, equals: .details)
+                .submitLabel(.done)
+                .onSubmit { endEditing() }
         }
     }
 
@@ -122,6 +171,7 @@ struct AddExpenseView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
                     Button {
+                        endEditing()
                         model.draftImage = nil
                         photoItem = nil
                     } label: {
@@ -149,6 +199,7 @@ struct AddExpenseView: View {
                     .background(.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                 }
                 .buttonStyle(.plain)
+                .simultaneousGesture(TapGesture().onEnded { endEditing() })
             }
         }
     }
@@ -163,6 +214,7 @@ struct AddExpenseView: View {
                     ForEach(model.participants) { person in
                         let selected = model.draftPaidById == person.id
                         Button {
+                            endEditing()
                             model.draftPaidById = person.id
                         } label: {
                             Text(person.displayName)
@@ -195,18 +247,25 @@ struct AddExpenseView: View {
                         .lineLimit(2)
                 }
                 Spacer()
-                Button("All") { model.selectAllParticipants() }
-                    .font(.system(.caption, design: .rounded).weight(.bold))
-                    .foregroundStyle(SplitTheme.forest)
-                Button("None") { model.clearSelectedParticipants() }
-                    .font(.system(.caption, design: .rounded).weight(.bold))
-                    .foregroundStyle(SplitTheme.coral)
+                Button("All") {
+                    endEditing()
+                    model.selectAllParticipants()
+                }
+                .font(.system(.caption, design: .rounded).weight(.bold))
+                .foregroundStyle(SplitTheme.forest)
+                Button("None") {
+                    endEditing()
+                    model.clearSelectedParticipants()
+                }
+                .font(.system(.caption, design: .rounded).weight(.bold))
+                .foregroundStyle(SplitTheme.coral)
             }
 
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 108), spacing: 8)], spacing: 8) {
                 ForEach(model.participants) { person in
                     let selected = model.selectedParticipantIds.contains(person.id)
                     Button {
+                        endEditing()
                         model.toggleParticipant(person.id)
                     } label: {
                         VStack(alignment: .leading, spacing: 6) {
