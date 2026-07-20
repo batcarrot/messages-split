@@ -106,7 +106,7 @@ struct BalancesView: View {
                 }
                 .padding(14)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(.white.opacity(0.75), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .background(SplitTheme.cardBackground())
             }
         }
     }
@@ -118,11 +118,11 @@ struct BalancesView: View {
                 .foregroundStyle(SplitTheme.forest)
             Text("No one owes anyone right now.")
                 .font(.system(.body, design: .rounded))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(SplitTheme.muted)
         }
         .padding(18)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.white.opacity(0.75), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .background(SplitTheme.cardBackground(cornerRadius: 18))
     }
 
     private func settlementRow(_ settlement: Settlement) -> some View {
@@ -134,6 +134,7 @@ struct BalancesView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(from) owes \(to)")
                     .font(.system(.body, design: .rounded).weight(.semibold))
+                    .foregroundStyle(SplitTheme.ink)
                 Text(amount)
                     .font(.system(.title3, design: .rounded).weight(.bold))
                     .foregroundStyle(SplitTheme.coral)
@@ -144,18 +145,20 @@ struct BalancesView: View {
                 .foregroundStyle(SplitTheme.moss)
         }
         .padding(14)
-        .background(.white.opacity(0.75), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .background(SplitTheme.cardBackground())
     }
 
     private var netList: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Net balances")
                 .font(.system(.headline, design: .rounded))
+                .foregroundStyle(SplitTheme.ink)
             ForEach(model.participants) { person in
                 let cents = model.netBalances[person.id] ?? 0
                 HStack {
                     Text(person.displayName)
                         .font(.system(.body, design: .rounded))
+                        .foregroundStyle(SplitTheme.ink)
                     Spacer()
                     Text(netLabel(cents))
                         .font(.system(.body, design: .rounded).weight(.semibold))
@@ -165,13 +168,14 @@ struct BalancesView: View {
             }
         }
         .padding(14)
-        .background(.white.opacity(0.55), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .background(SplitTheme.cardBackground())
     }
 
     private var peopleList: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("People in this split")
                 .font(.system(.headline, design: .rounded))
+                .foregroundStyle(SplitTheme.ink)
             ForEach(model.participants) { person in
                 Button {
                     renamingId = person.id
@@ -191,7 +195,7 @@ struct BalancesView: View {
             }
         }
         .padding(14)
-        .background(.white.opacity(0.55), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .background(SplitTheme.cardBackground())
     }
 
     private func netLabel(_ cents: Int) -> String {

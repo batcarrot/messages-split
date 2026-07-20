@@ -43,6 +43,7 @@ struct ExpandedRootView: View {
                 }
             }
             .navigationBarHidden(true)
+            .preferredColorScheme(.light)
         }
     }
 
@@ -57,12 +58,16 @@ struct ExpandedRootView: View {
                     .foregroundStyle(SplitTheme.ink.opacity(0.75))
             }
             Spacer()
-            Button("Done") {
+            Button("Close") {
                 Keyboard.dismiss()
                 model.compact()
             }
             .font(.system(.body, design: .rounded).weight(.semibold))
             .foregroundStyle(SplitTheme.forest)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(SplitTheme.field, in: Capsule())
+            .overlay(Capsule().strokeBorder(SplitTheme.stroke, lineWidth: 1))
         }
         .padding(.horizontal, 20)
         .padding(.top, 12)
@@ -140,6 +145,6 @@ struct ActivityView: View {
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.white.opacity(0.7), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .background(SplitTheme.cardBackground())
     }
 }
