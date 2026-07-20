@@ -11,7 +11,7 @@ final class MessagesViewController: MSMessagesAppViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.systemBackground
+        view.backgroundColor = UIColor(red: 0.93, green: 0.88, blue: 0.78, alpha: 1)
     }
 
     override func willBecomeActive(with conversation: MSConversation) {
