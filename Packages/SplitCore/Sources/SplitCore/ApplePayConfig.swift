@@ -2,13 +2,13 @@ import Foundation
 
 /// Apple Pay merchant configuration.
 ///
-/// Apple does **not** expose a public API to read a user's Apple Pay / Wallet
-/// transaction history. Split uses PassKit to *collect or settle* balances with
-/// Apple Pay when a merchant ID is configured.
+/// Personal (free) Apple Developer teams **cannot** use the Apple Pay capability.
+/// Leave `merchantIdentifier` empty until you have a paid Apple Developer Program
+/// membership and a Merchant ID. Settle-up still works via **Mark as paid**.
 public enum ApplePayConfig {
-    /// Replace with your Merchant ID from Apple Developer → Certificates, Identifiers & Profiles.
-    /// Example: `merchant.com.batcarrot.messages-split`
-    public static let merchantIdentifier = "merchant.com.batcarrot.messages-split"
+    /// Set this only after enabling Apple Pay on a paid team, e.g.
+    /// `merchant.com.batcarrot.messages-split`. Keep empty for personal teams.
+    public static let merchantIdentifier = ""
 
     /// ISO country code for the payment request.
     public static let countryCode = "US"
@@ -16,6 +16,7 @@ public enum ApplePayConfig {
     /// Supported networks for settle-up.
     public static let supportedNetworksRaw = ["visa", "masterCard", "amex", "discover"]
 
+    /// Live Apple Pay is off until a merchant ID is set (requires paid team + entitlement).
     public static var isConfigured: Bool {
         !merchantIdentifier.isEmpty && merchantIdentifier.hasPrefix("merchant.")
     }
