@@ -78,7 +78,7 @@ struct BalancesView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Pay what you owe")
                 .font(.system(.headline, design: .rounded))
-            Text("Settle with Apple Pay, or mark paid if you already sent money.")
+            Text("Mark paid after you send money outside the app.")
                 .font(.system(.footnote, design: .rounded))
                 .foregroundStyle(.secondary)
 
@@ -90,7 +90,7 @@ struct BalancesView: View {
                     Text("\(amount) to \(to)")
                         .font(.system(.body, design: .rounded).weight(.semibold))
 
-                    if ApplePaySettler.canMakePayments {
+                    if ApplePayConfig.isConfigured, ApplePaySettler.canMakePayments {
                         ApplePayButton(type: .plain, style: .black) {
                             model.settleWithApplePay(settlement)
                         }

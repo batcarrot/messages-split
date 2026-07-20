@@ -14,16 +14,16 @@ An **iMessage app extension** that splits expenses with everyone in a chat: pick
 
 ## Apple Pay notes
 
-Apple does **not** provide a public API to import / “pull down” a user’s Apple Pay or Wallet transaction history. Split uses **PassKit** to *collect or settle* open balances with Apple Pay instead.
+Personal (free) Apple IDs **cannot** use the Apple Pay capability — it is turned off by default so you can build and run.
 
-To enable live Apple Pay:
+To enable later (paid Apple Developer Program only):
 
 1. Create a Merchant ID in [Apple Developer](https://developer.apple.com/account/resources/identifiers/list/merchant)
 2. Set it in `Packages/SplitCore/Sources/SplitCore/ApplePayConfig.swift`
-3. Enable the **Apple Pay** capability on both app targets (merchant ID is also in the entitlements)
-4. Wire `payment.token` in `ApplePaySettler` to your payment processor before App Store release
+3. Add the Apple Pay entitlement / capability on both targets
+4. Wire `payment.token` in `ApplePaySettler` to your payment processor
 
-Until a merchant + processor are configured, users can still **Mark as paid** after sending money another way. Attaching a receipt photo covers “I paid with Apple Pay at the restaurant” for expense entry.
+Until then, use **Mark as paid**. Receipt photos cover “I paid with Apple Pay at the restaurant” for expense entry.
 
 ## Project layout
 
@@ -41,7 +41,7 @@ scripts/validate_split_logic.py
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`)
 - Apple Developer team (for device / Messages testing)
 - App Group: `group.com.batcarrot.messages-split`
-- Optional: Apple Pay Merchant ID `merchant.com.batcarrot.messages-split`
+- Optional later: Apple Pay (paid Apple Developer Program only)
 
 ## Setup
 
