@@ -12,9 +12,28 @@ struct AddExpenseView: View {
         case amount, title, details
     }
 
+    private var isEditing: Bool { focusedField != nil }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
+                if isEditing {
+                    HStack {
+                        Text("Editing")
+                            .font(.system(.footnote, design: .rounded).weight(.semibold))
+                            .foregroundStyle(SplitTheme.muted)
+                        Spacer()
+                        Button("Done") {
+                            endEditing()
+                        }
+                        .font(.system(.body, design: .rounded).weight(.bold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .background(SplitTheme.forest, in: Capsule())
+                    }
+                }
+
                 amountField
                 titleField
                 detailsField
@@ -50,9 +69,6 @@ struct AddExpenseView: View {
             .padding(20)
         }
         .scrollDismissesKeyboard(.interactively)
-        .dismissKeyboardToolbar {
-            endEditing()
-        }
         .onChange(of: photoItem) { newItem in
             endEditing()
             Task {

@@ -41,7 +41,7 @@ struct CompactRootView: View {
             }
             .padding(.horizontal, 16)
         }
-        .preferredColorScheme(.light)
+        .keyboardDismissBridge()
     }
 
     private var balanceChip: some View {

@@ -12,43 +12,42 @@ struct ExpandedRootView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                SplitTheme.background.ignoresSafeArea()
+        ZStack {
+            SplitTheme.background.ignoresSafeArea()
 
-                VStack(spacing: 0) {
-                    header
-                    Picker("Section", selection: $tab) {
-                        ForEach(Tab.allCases, id: \.self) { item in
-                            Text(item.rawValue).tag(item)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .padding()
-                    .onChange(of: tab) { _ in
-                        Keyboard.dismiss()
-                    }
+            VStack(spacing: 0) {
+                header
 
-                    Group {
-                        switch tab {
-                        case .add:
-                            AddExpenseView(model: model)
-                        case .balances:
-                            BalancesView(model: model)
-                        case .activity:
-                            ActivityView(model: model)
-                        }
+                Picker("Section", selection: $tab) {
+                    ForEach(Tab.allCases, id: \.self) { item in
+                        Text(item.rawValue).tag(item)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .onChange(of: tab) { _ in
+                    Keyboard.dismiss()
+                }
+
+                Group {
+                    switch tab {
+                    case .add:
+                        AddExpenseView(model: model)
+                    case .balances:
+                        BalancesView(model: model)
+                    case .activity:
+                        ActivityView(model: model)
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .navigationBarHidden(true)
-            .preferredColorScheme(.light)
         }
+        .keyboardDismissBridge()
     }
 
     private var header: some View {
-        HStack {
+        HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Split")
                     .font(.system(size: 34, weight: .bold, design: .serif))
@@ -58,16 +57,19 @@ struct ExpandedRootView: View {
                     .foregroundStyle(SplitTheme.ink.opacity(0.75))
             }
             Spacer()
-            Button("Close") {
+            Button {
                 Keyboard.dismiss()
                 model.compact()
+            } label: {
+                Text("Close")
+                    .font(.system(.body, design: .rounded).weight(.semibold))
+                    .foregroundStyle(SplitTheme.forest)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(SplitTheme.field, in: Capsule())
+                    .overlay(Capsule().strokeBorder(SplitTheme.stroke, lineWidth: 1))
             }
-            .font(.system(.body, design: .rounded).weight(.semibold))
-            .foregroundStyle(SplitTheme.forest)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 6)
-            .background(SplitTheme.field, in: Capsule())
-            .overlay(Capsule().strokeBorder(SplitTheme.stroke, lineWidth: 1))
+            .buttonStyle(.plain)
         }
         .padding(.horizontal, 20)
         .padding(.top, 12)
@@ -90,7 +92,7 @@ struct ActivityView: View {
                 if model.ledger.expenses.isEmpty {
                     Text("No expenses yet. Add one to start the ledger.")
                         .font(.system(.body, design: .rounded))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(SplitTheme.muted)
                         .padding(.top, 24)
                 } else {
                     ForEach(model.ledger.expenses.reversed()) { expense in
@@ -117,9 +119,11 @@ struct ActivityView: View {
             HStack(alignment: .firstTextBaseline) {
                 Text(expense.title)
                     .font(.system(.headline, design: .rounded))
+                    .foregroundStyle(SplitTheme.ink)
                 Spacer()
                 Text(Money(cents: expense.amountCents, currencyCode: expense.currencyCode).formatted)
                     .font(.system(.headline, design: .rounded))
+                    .foregroundStyle(SplitTheme.ink)
             }
 
             if let details = expense.details, !details.isEmpty {
@@ -133,14 +137,14 @@ struct ActivityView: View {
                 let via = expense.paymentMethod == .applePay ? " · Apple Pay" : " · manual"
                 Text("\(model.ledger.displayName(for: expense.paidById)) paid \(to)\(via)")
                     .font(.system(.caption, design: .rounded))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(SplitTheme.muted)
             } else {
                 let names = expense.shares
                     .map { model.ledger.displayName(for: $0.participantId) }
                     .joined(separator: ", ")
                 Text("Paid by \(model.ledger.displayName(for: expense.paidById)) · \(names)")
                     .font(.system(.caption, design: .rounded))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(SplitTheme.muted)
             }
         }
         .padding(14)
