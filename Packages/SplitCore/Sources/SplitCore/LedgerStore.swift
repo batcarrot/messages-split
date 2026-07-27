@@ -1,12 +1,17 @@
 import Foundation
 
-/// Persists ledgers per Messages conversation using an App Group `UserDefaults` suite.
+/// Persists ledgers per Messages conversation in the extension's local `UserDefaults`.
+/// (App Groups are avoided so personal Apple teams can sign without entitlement rewrites.)
 public final class LedgerStore: @unchecked Sendable {
     private let defaults: UserDefaults
     private let prefix = "ledger."
 
-    public init(appGroupID: String) {
-        self.defaults = UserDefaults(suiteName: appGroupID) ?? .standard
+    public init(appGroupID: String? = nil) {
+        if let appGroupID, let suite = UserDefaults(suiteName: appGroupID) {
+            self.defaults = suite
+        } else {
+            self.defaults = .standard
+        }
     }
 
     public init(defaults: UserDefaults) {

@@ -3,6 +3,7 @@
 /// Use `Expense.equalSplit` to create costs, `BalanceEngine` for who-owes-whom,
 /// and `MessagePayload` to encode ledgers into interactive Messages bubbles.
 public enum SplitCoreInfo {
-    public static let appGroupID = "group.com.batcarrot.messages-split"
+    /// Reserved for a future paid-team App Group. Empty = local extension storage.
+    public static let appGroupID: String? = nil
     public static let displayName = "Split"
 }
