@@ -30,13 +30,18 @@ struct CompactRootView: View {
                         .font(.headline)
                         .foregroundStyle(SplitTheme.forest)
                         .padding(12)
-                        .background(.white.opacity(0.8), in: Circle())
+                        .background(
+                            Circle()
+                                .fill(SplitTheme.field)
+                                .overlay(Circle().strokeBorder(SplitTheme.stroke, lineWidth: 1.5))
+                        )
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Send balances")
             }
             .padding(.horizontal, 16)
         }
+        .keyboardDismissBridge()
     }
 
     private var balanceChip: some View {
@@ -55,6 +60,10 @@ struct CompactRootView: View {
             .foregroundStyle(SplitTheme.ink)
             .padding(.horizontal, 12)
             .padding(.vertical, 10)
-            .background(.white.opacity(0.75), in: Capsule())
+            .background(
+                Capsule()
+                    .fill(SplitTheme.field)
+                    .overlay(Capsule().strokeBorder(SplitTheme.stroke, lineWidth: 1.5))
+            )
     }
 }

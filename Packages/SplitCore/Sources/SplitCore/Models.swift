@@ -51,7 +51,7 @@ public struct Expense: Codable, Identifiable, Hashable, Sendable {
     public var splitMode: SplitMode
     public var kind: ExpenseKind
     public var paymentMethod: PaymentMethod
-    /// App Group relative filename, e.g. `images/<uuid>.jpg`.
+    /// Local relative filename for a receipt photo, e.g. `images/<uuid>.jpg`.
     public var imageFileName: String?
     /// Whether a receipt/photo is attached (may exist only on sender until synced via bubble).
     public var hasImage: Bool

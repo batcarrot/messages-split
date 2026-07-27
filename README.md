@@ -10,7 +10,7 @@ An **iMessage app extension** that splits expenses with everyone in a chat: pick
 - Equal split with fair remainder cents
 - Net balances + simplified “who owes whom”
 - **Apple Pay settle-up** for amounts you owe (plus mark-as-paid fallback)
-- Interactive `MSMessage` bubbles + App Group ledger persistence
+- Interactive `MSMessage` bubbles + local ledger persistence
 
 ## Apple Pay notes
 
@@ -40,7 +40,7 @@ scripts/validate_split_logic.py
 - macOS with Xcode 15+
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`)
 - Apple Developer team (for device / Messages testing)
-- App Group: `group.com.batcarrot.messages-split`
+- Apple Developer team (personal/free works for basic device installs)
 - Optional later: Apple Pay (paid Apple Developer Program only)
 
 ## Setup
@@ -55,10 +55,11 @@ open SplitMessages.xcodeproj
 
 1. Select the **SplitMessages** scheme.
 2. Set your **Development Team** on both `SplitMessages` and `MessagesExtension`.
-3. Confirm the App Group capability matches `group.com.batcarrot.messages-split`.
-4. (Optional) Enable Apple Pay with your merchant ID.
-5. Run on a **physical iPhone** (Messages extensions are limited in Simulator).
-6. In Messages → App Store icon → enable **Split**.
+3. In **Signing & Capabilities**, remove **App Groups** and **Apple Pay** if Xcode added them (personal teams often can’t use these cleanly).
+4. Run on a **physical iPhone** (Messages extensions are limited in Simulator).
+5. In Messages → App Store icon → enable **Split**.
+
+If Xcode complains that an entitlements file was modified during the build, pull the latest project (`xcodegen generate`), clean the build folder, and confirm those capabilities are removed.
 
 ### Run SplitCore unit tests (on a Mac)
 
@@ -84,7 +85,7 @@ python3 scripts/validate_split_logic.py -v
 
 ## How sync works
 
-Each bubble embeds a `splitmessages://ledger?...` URL (`MessagePayload`) with the ledger JSON. Opening a bubble merges that payload with local App Group storage. Bill photos live in the App Group container and are shown on the message bubble layout; they are not stuffed into the URL (size limits).
+Each bubble embeds a `splitmessages://ledger?...` URL (`MessagePayload`) with the ledger JSON. Opening a bubble merges that payload with local extension storage. Bill photos are stored on-device and shown on the message bubble layout; they are not stuffed into the URL (size limits).
 
 ## Notes
 

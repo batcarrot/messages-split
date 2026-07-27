@@ -4,16 +4,30 @@ import Foundation
 import UIKit
 #endif
 
-/// Stores optional bill photos in the App Group container (not in the message URL).
+/// Stores optional bill photos on disk (extension Application Support).
 public final class ImageStore: @unchecked Sendable {
-    private let containerURL: URL?
+    private let imagesDirectory: URL?
 
-    public init(appGroupID: String) {
-        containerURL = FileManager.default
-            .containerURL(forSecurityApplicationGroupIdentifier: appGroupID)?
-            .appendingPathComponent("images", isDirectory: true)
-        if let containerURL {
-            try? FileManager.default.createDirectory(at: containerURL, withIntermediateDirectories: true)
+    public init(appGroupID: String? = nil) {
+        let base: URL?
+        if let appGroupID,
+           let groupURL = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: appGroupID
+           ) {
+            base = groupURL
+        } else {
+            base = FileManager.default.urls(
+                for: .applicationSupportDirectory,
+                in: .userDomainMask
+            ).first?.appendingPathComponent("Split", isDirectory: true)
+        }
+
+        if let base {
+            let images = base.appendingPathComponent("images", isDirectory: true)
+            try? FileManager.default.createDirectory(at: images, withIntermediateDirectories: true)
+            imagesDirectory = images
+        } else {
+            imagesDirectory = nil
         }
     }
 
@@ -22,8 +36,8 @@ public final class ImageStore: @unchecked Sendable {
     }
 
     public func saveJPEG(data: Data, expenseId: UUID) -> String? {
-        guard let root = containerURL else { return nil }
-        let fileURL = root.appendingPathComponent("\(expenseId.uuidString).jpg")
+        guard let imagesDirectory else { return nil }
+        let fileURL = imagesDirectory.appendingPathComponent("\(expenseId.uuidString).jpg")
         do {
             try data.write(to: fileURL, options: .atomic)
             return fileName(for: expenseId)
@@ -33,14 +47,16 @@ public final class ImageStore: @unchecked Sendable {
     }
 
     public func loadData(fileName: String) -> Data? {
-        guard let root = containerURL?.deletingLastPathComponent() else { return nil }
-        let fileURL = root.appendingPathComponent(fileName)
+        guard let imagesDirectory else { return nil }
+        let name = (fileName as NSString).lastPathComponent
+        let fileURL = imagesDirectory.appendingPathComponent(name)
         return try? Data(contentsOf: fileURL)
     }
 
     public func delete(fileName: String) {
-        guard let root = containerURL?.deletingLastPathComponent() else { return }
-        let fileURL = root.appendingPathComponent(fileName)
+        guard let imagesDirectory else { return }
+        let name = (fileName as NSString).lastPathComponent
+        let fileURL = imagesDirectory.appendingPathComponent(name)
         try? FileManager.default.removeItem(at: fileURL)
     }
 

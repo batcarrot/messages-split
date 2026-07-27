@@ -11,7 +11,7 @@ final class MessagesViewController: MSMessagesAppViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.systemBackground
+        view.backgroundColor = UIColor(red: 0.93, green: 0.88, blue: 0.78, alpha: 1)
     }
 
     override func willBecomeActive(with conversation: MSConversation) {
@@ -235,8 +235,12 @@ final class MessagesViewController: MSMessagesAppViewController {
 
         if let hostingController {
             hostingController.rootView = root
+            hostingController.view.backgroundColor = .clear
+            hostingController.view.isUserInteractionEnabled = true
         } else {
             let host = UIHostingController(rootView: root)
+            host.view.backgroundColor = .clear
+            host.view.isUserInteractionEnabled = true
             addChild(host)
             host.view.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(host.view)
