@@ -1,0 +1,580 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		28CB74E3EEF1D3197D283F6D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEA08ED7660F1FF9E1DC3B69 /* SwiftUI.framework */; };
+		2AFD49D0447E88EA74CED27F /* SplitCore in Frameworks */ = {isa = PBXBuildFile; productRef = 39243F8F8F3BB880BCCE0925 /* SplitCore */; };
+		309E6928185EF2CC9ADBB377 /* ExpandedRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCA7F21A42CFB6095D57222 /* ExpandedRootView.swift */; };
+		31F01AFBB0D1113BBE6FAAF4 /* SplitCore in Frameworks */ = {isa = PBXBuildFile; productRef = CAF2AAD629E9220B63D3B011 /* SplitCore */; };
+		3475326F892C02AF098951AA /* BalancesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462AB193DD829597BAB14BDF /* BalancesView.swift */; };
+		34B8B0BE00C0808D70568BE4 /* SplitSessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441CE2735F6EC8CAC83E3965 /* SplitSessionModel.swift */; };
+		3D39ABCEB065C72554523C3B /* KeyboardDismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD12DAE6A5F8438823241AE /* KeyboardDismiss.swift */; };
+		4BB43F25F70EC0344E1520D9 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920ED46851734ACEB83F3695 /* Theme.swift */; };
+		4F81F73AD24011AC4A34310B /* MessagesExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 89D667D8362A4AA456C04190 /* MessagesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5BDE7A8835EFF811D1D4F4F7 /* AddExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC50FFFBD700F9EA8D626CA /* AddExpenseView.swift */; };
+		6C6FEA5C5D86F5B1AE67467C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E31B4618A8A0FED6F2CB30A /* Assets.xcassets */; };
+		76CFF16FFEB1D89F4EFE35A4 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95D6FEF0B9AED2E03C25EF6 /* Messages.framework */; };
+		76EE13267FF8E30A46CE3ACC /* SplitMessagesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0812B940567BF2D6C58E12 /* SplitMessagesApp.swift */; };
+		7EBF73AABE57C558DC5E2EFC /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A68896F4D3739A9D86763C /* PhotosUI.framework */; };
+		873294097994A23621C6CB07 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D197CC39A29FEE47D29139D /* MessagesViewController.swift */; };
+		9A0109AE483375411B213EAE /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAA0334D4B7B7883AD95EFF2 /* PassKit.framework */; };
+		AFA90A7154D4329D0C264E39 /* CompactRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AA9E1F8FC6BF247EA27191 /* CompactRootView.swift */; };
+		DAF61E7E73468C6FE4C76E93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F38B3049F431CC162F358EA /* Assets.xcassets */; };
+		E434A5B13F96275AC1C0030C /* ApplePaySettler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09364FFFAC4D19D33489A17B /* ApplePaySettler.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DE210F1C99CDCFF2CA5B7EC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A831C9FE8F1C265DD15E5D73 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1A7F571D04FFFC733006C323;
+			remoteInfo = MessagesExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0E2BB920EA35BAC2E1399B37 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4F81F73AD24011AC4A34310B /* MessagesExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		08A68896F4D3739A9D86763C /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
+		09364FFFAC4D19D33489A17B /* ApplePaySettler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySettler.swift; sourceTree = "<group>"; };
+		0E31B4618A8A0FED6F2CB30A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1AD12DAE6A5F8438823241AE /* KeyboardDismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDismiss.swift; sourceTree = "<group>"; };
+		2F3804BD30FD6B4EA437163D /* SplitMessages.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SplitMessages.entitlements; sourceTree = "<group>"; };
+		441CE2735F6EC8CAC83E3965 /* SplitSessionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitSessionModel.swift; sourceTree = "<group>"; };
+		462AB193DD829597BAB14BDF /* BalancesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesView.swift; sourceTree = "<group>"; };
+		51AA9E1F8FC6BF247EA27191 /* CompactRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactRootView.swift; sourceTree = "<group>"; };
+		5A138F89875581AB855D0A8B /* SplitCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SplitCore; path = Packages/SplitCore; sourceTree = SOURCE_ROOT; };
+		5D197CC39A29FEE47D29139D /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		7DE8062D48ADDF65751A4492 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		89D667D8362A4AA456C04190 /* MessagesExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MessagesExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		920ED46851734ACEB83F3695 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		9F38B3049F431CC162F358EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AA0812B940567BF2D6C58E12 /* SplitMessagesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitMessagesApp.swift; sourceTree = "<group>"; };
+		B95D6FEF0B9AED2E03C25EF6 /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
+		BA1F07661A57615A3771B0AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CAC50FFFBD700F9EA8D626CA /* AddExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseView.swift; sourceTree = "<group>"; };
+		DAA0334D4B7B7883AD95EFF2 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		DCCA7F21A42CFB6095D57222 /* ExpandedRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedRootView.swift; sourceTree = "<group>"; };
+		E6E0E6704FFF341A943BBA1F /* MessagesExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MessagesExtension.entitlements; sourceTree = "<group>"; };
+		EEA08ED7660F1FF9E1DC3B69 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		F1E31F140BE6A41734AA5DCA /* SplitMessages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SplitMessages.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		72F6EA1A3520CDD19D13DA13 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				31F01AFBB0D1113BBE6FAAF4 /* SplitCore in Frameworks */,
+				76CFF16FFEB1D89F4EFE35A4 /* Messages.framework in Frameworks */,
+				28CB74E3EEF1D3197D283F6D /* SwiftUI.framework in Frameworks */,
+				9A0109AE483375411B213EAE /* PassKit.framework in Frameworks */,
+				7EBF73AABE57C558DC5E2EFC /* PhotosUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		91E0F106E02629F16320E0F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AFD49D0447E88EA74CED27F /* SplitCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2F4EF885429FB7A5A28E2BFA /* MessagesExtension */ = {
+			isa = PBXGroup;
+			children = (
+				CF4442B57F2BFB6C65EEF254 /* Views */,
+				09364FFFAC4D19D33489A17B /* ApplePaySettler.swift */,
+				9F38B3049F431CC162F358EA /* Assets.xcassets */,
+				7DE8062D48ADDF65751A4492 /* Info.plist */,
+				E6E0E6704FFF341A943BBA1F /* MessagesExtension.entitlements */,
+				5D197CC39A29FEE47D29139D /* MessagesViewController.swift */,
+				441CE2735F6EC8CAC83E3965 /* SplitSessionModel.swift */,
+			);
+			path = MessagesExtension;
+			sourceTree = "<group>";
+		};
+		304E281479A47B73979019F0 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				5A138F89875581AB855D0A8B /* SplitCore */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		54BEDE421A1753D8F878AA11 /* SplitMessages */ = {
+			isa = PBXGroup;
+			children = (
+				0E31B4618A8A0FED6F2CB30A /* Assets.xcassets */,
+				BA1F07661A57615A3771B0AA /* Info.plist */,
+				2F3804BD30FD6B4EA437163D /* SplitMessages.entitlements */,
+				AA0812B940567BF2D6C58E12 /* SplitMessagesApp.swift */,
+			);
+			path = SplitMessages;
+			sourceTree = "<group>";
+		};
+		7D36E4F473EE5C1802FAC247 = {
+			isa = PBXGroup;
+			children = (
+				2F4EF885429FB7A5A28E2BFA /* MessagesExtension */,
+				304E281479A47B73979019F0 /* Packages */,
+				54BEDE421A1753D8F878AA11 /* SplitMessages */,
+				F24AABBE5EF10440741B2956 /* Frameworks */,
+				94E719E7655853C9D9A10253 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		94E719E7655853C9D9A10253 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				89D667D8362A4AA456C04190 /* MessagesExtension.appex */,
+				F1E31F140BE6A41734AA5DCA /* SplitMessages.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CF4442B57F2BFB6C65EEF254 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CAC50FFFBD700F9EA8D626CA /* AddExpenseView.swift */,
+				462AB193DD829597BAB14BDF /* BalancesView.swift */,
+				51AA9E1F8FC6BF247EA27191 /* CompactRootView.swift */,
+				DCCA7F21A42CFB6095D57222 /* ExpandedRootView.swift */,
+				1AD12DAE6A5F8438823241AE /* KeyboardDismiss.swift */,
+				920ED46851734ACEB83F3695 /* Theme.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F24AABBE5EF10440741B2956 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B95D6FEF0B9AED2E03C25EF6 /* Messages.framework */,
+				DAA0334D4B7B7883AD95EFF2 /* PassKit.framework */,
+				08A68896F4D3739A9D86763C /* PhotosUI.framework */,
+				EEA08ED7660F1FF9E1DC3B69 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1A7F571D04FFFC733006C323 /* MessagesExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3FC117E44F6A91DF81DD89A1 /* Build configuration list for PBXNativeTarget "MessagesExtension" */;
+			buildPhases = (
+				7500114F3DA0BAC76D5E33B2 /* Sources */,
+				B1D981700570A7C140B8C93E /* Resources */,
+				72F6EA1A3520CDD19D13DA13 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MessagesExtension;
+			packageProductDependencies = (
+				CAF2AAD629E9220B63D3B011 /* SplitCore */,
+			);
+			productName = MessagesExtension;
+			productReference = 89D667D8362A4AA456C04190 /* MessagesExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		C63DE57782015640EBC1F86C /* SplitMessages */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EB3333F5BFE99BAEEC93403D /* Build configuration list for PBXNativeTarget "SplitMessages" */;
+			buildPhases = (
+				7D0D04698B1EAF84C5266142 /* Sources */,
+				D05D2113C177154F427C2775 /* Resources */,
+				91E0F106E02629F16320E0F5 /* Frameworks */,
+				0E2BB920EA35BAC2E1399B37 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E8FD701A03872911A2259CB3 /* PBXTargetDependency */,
+			);
+			name = SplitMessages;
+			packageProductDependencies = (
+				39243F8F8F3BB880BCCE0925 /* SplitCore */,
+			);
+			productName = SplitMessages;
+			productReference = F1E31F140BE6A41734AA5DCA /* SplitMessages.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A831C9FE8F1C265DD15E5D73 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					1A7F571D04FFFC733006C323 = {
+						ProvisioningStyle = Automatic;
+					};
+					C63DE57782015640EBC1F86C = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 26B43BEDCEF04D36DC73DB94 /* Build configuration list for PBXProject "SplitMessages" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 7D36E4F473EE5C1802FAC247;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4308837FFDB26FD61C506628 /* XCLocalSwiftPackageReference "Packages/SplitCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 94E719E7655853C9D9A10253 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C63DE57782015640EBC1F86C /* SplitMessages */,
+				1A7F571D04FFFC733006C323 /* MessagesExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B1D981700570A7C140B8C93E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAF61E7E73468C6FE4C76E93 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D05D2113C177154F427C2775 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C6FEA5C5D86F5B1AE67467C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7500114F3DA0BAC76D5E33B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BDE7A8835EFF811D1D4F4F7 /* AddExpenseView.swift in Sources */,
+				E434A5B13F96275AC1C0030C /* ApplePaySettler.swift in Sources */,
+				3475326F892C02AF098951AA /* BalancesView.swift in Sources */,
+				AFA90A7154D4329D0C264E39 /* CompactRootView.swift in Sources */,
+				309E6928185EF2CC9ADBB377 /* ExpandedRootView.swift in Sources */,
+				3D39ABCEB065C72554523C3B /* KeyboardDismiss.swift in Sources */,
+				873294097994A23621C6CB07 /* MessagesViewController.swift in Sources */,
+				34B8B0BE00C0808D70568BE4 /* SplitSessionModel.swift in Sources */,
+				4BB43F25F70EC0344E1520D9 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D0D04698B1EAF84C5266142 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76EE13267FF8E30A46CE3ACC /* SplitMessagesApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E8FD701A03872911A2259CB3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1A7F571D04FFFC733006C323 /* MessagesExtension */;
+			targetProxy = DE210F1C99CDCFF2CA5B7EC5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4E37216A31C6CB8FEEFFC44D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		971DBCAE0CFFBDEB64254128 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MessagesExtension/MessagesExtension.entitlements;
+				DEVELOPMENT_TEAM = TQNBC7X2XW;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MessagesExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.batcarrot.messages-split.MessagesExtension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		97A35E5B37D8326862FFCF98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SplitMessages/SplitMessages.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = TQNBC7X2XW;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SplitMessages/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.batcarrot.messages-split";
+				SDKROOT = iphoneos;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ACE0627C7FE293C88170AFCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D14369A36F8F97B191C0758E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MessagesExtension/MessagesExtension.entitlements;
+				DEVELOPMENT_TEAM = TQNBC7X2XW;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MessagesExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.batcarrot.messages-split.MessagesExtension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DB6775DBF61CF4D81C8FCDCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SplitMessages/SplitMessages.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = TQNBC7X2XW;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SplitMessages/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.batcarrot.messages-split";
+				SDKROOT = iphoneos;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		26B43BEDCEF04D36DC73DB94 /* Build configuration list for PBXProject "SplitMessages" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACE0627C7FE293C88170AFCA /* Debug */,
+				4E37216A31C6CB8FEEFFC44D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3FC117E44F6A91DF81DD89A1 /* Build configuration list for PBXNativeTarget "MessagesExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D14369A36F8F97B191C0758E /* Debug */,
+				971DBCAE0CFFBDEB64254128 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EB3333F5BFE99BAEEC93403D /* Build configuration list for PBXNativeTarget "SplitMessages" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97A35E5B37D8326862FFCF98 /* Debug */,
+				DB6775DBF61CF4D81C8FCDCA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		4308837FFDB26FD61C506628 /* XCLocalSwiftPackageReference "Packages/SplitCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/SplitCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		39243F8F8F3BB880BCCE0925 /* SplitCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SplitCore;
+		};
+		CAF2AAD629E9220B63D3B011 /* SplitCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SplitCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = A831C9FE8F1C265DD15E5D73 /* Project object */;
+}
