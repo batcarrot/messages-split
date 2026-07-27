@@ -37,7 +37,6 @@ struct CompactRootView: View {
             }
             .padding(.horizontal, 16)
         }
-        .keyboardDismissBridge()
     }
 
     private var balanceChip: some View {

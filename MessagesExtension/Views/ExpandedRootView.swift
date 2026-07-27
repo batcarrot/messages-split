@@ -43,7 +43,6 @@ struct ExpandedRootView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .keyboardDismissBridge()
     }
 
     private var header: some View {

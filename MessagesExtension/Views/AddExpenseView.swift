@@ -87,17 +87,13 @@ struct AddExpenseView: View {
             Text("Amount")
                 .font(.system(.caption, design: .rounded).weight(.semibold))
                 .foregroundStyle(SplitTheme.muted)
-            TextField(
-                "",
-                text: $model.draftAmountText,
-                prompt: Text("0.00").foregroundColor(SplitTheme.muted)
-            )
-            .keyboardType(.decimalPad)
-            .font(.system(size: 44, weight: .bold, design: .rounded))
-            .foregroundStyle(SplitTheme.ink)
-            .focused($focusedField, equals: .amount)
-            .submitLabel(.done)
-            .onSubmit { endEditing() }
+            TextField("0.00", text: $model.draftAmountText)
+                .keyboardType(.decimalPad)
+                .font(.system(size: 44, weight: .bold, design: .rounded))
+                .foregroundStyle(SplitTheme.ink)
+                .focused($focusedField, equals: .amount)
+                .submitLabel(.done)
+                .onSubmit { endEditing() }
         }
     }
 
@@ -106,18 +102,13 @@ struct AddExpenseView: View {
             Text("Title")
                 .font(.system(.caption, design: .rounded).weight(.semibold))
                 .foregroundStyle(SplitTheme.muted)
-            TextField(
-                "",
-                text: $model.draftTitle,
-                prompt: Text("Dinner, taxi, groceries…").foregroundColor(SplitTheme.muted)
-            )
-            .font(.system(.title3, design: .rounded))
-            .foregroundStyle(SplitTheme.ink)
-            .padding(12)
-            .background(.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-            .focused($focusedField, equals: .title)
-            .submitLabel(.done)
-            .onSubmit { endEditing() }
+            TextField("Dinner, taxi, groceries…", text: $model.draftTitle)
+                .font(.system(.title3, design: .rounded))
+                .padding(12)
+                .background(.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .focused($focusedField, equals: .title)
+                .submitLabel(.done)
+                .onSubmit { endEditing() }
         }
     }
 
@@ -131,20 +122,14 @@ struct AddExpenseView: View {
                     .font(.system(.caption, design: .rounded))
                     .foregroundStyle(SplitTheme.muted.opacity(0.85))
             }
-            TextField(
-                "",
-                text: $model.draftDetails,
-                prompt: Text("Add a note, venue, or receipt details…").foregroundColor(SplitTheme.muted),
-                axis: .vertical
-            )
-            .lineLimit(3...6)
-            .font(.system(.body, design: .rounded))
-            .foregroundStyle(SplitTheme.ink)
-            .padding(12)
-            .background(.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-            .focused($focusedField, equals: .details)
-            .submitLabel(.done)
-            .onSubmit { endEditing() }
+            TextField("Add a note, venue, or receipt details…", text: $model.draftDetails, axis: .vertical)
+                .lineLimit(3...6)
+                .font(.system(.body, design: .rounded))
+                .padding(12)
+                .background(.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .focused($focusedField, equals: .details)
+                .submitLabel(.done)
+                .onSubmit { endEditing() }
         }
     }
 
