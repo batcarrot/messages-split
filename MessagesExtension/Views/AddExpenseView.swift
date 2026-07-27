@@ -90,7 +90,7 @@ struct AddExpenseView: View {
             TextField(
                 "",
                 text: $model.draftAmountText,
-                prompt: Text("0.00").foregroundStyle(SplitTheme.muted)
+                prompt: Text("0.00").foregroundColor(SplitTheme.muted)
             )
             .keyboardType(.decimalPad)
             .font(.system(size: 44, weight: .bold, design: .rounded))
@@ -109,7 +109,7 @@ struct AddExpenseView: View {
             TextField(
                 "",
                 text: $model.draftTitle,
-                prompt: Text("Dinner, taxi, groceries…").foregroundStyle(SplitTheme.muted)
+                prompt: Text("Dinner, taxi, groceries…").foregroundColor(SplitTheme.muted)
             )
             .font(.system(.title3, design: .rounded))
             .foregroundStyle(SplitTheme.ink)
@@ -134,7 +134,7 @@ struct AddExpenseView: View {
             TextField(
                 "",
                 text: $model.draftDetails,
-                prompt: Text("Add a note, venue, or receipt details…").foregroundStyle(SplitTheme.muted),
+                prompt: Text("Add a note, venue, or receipt details…").foregroundColor(SplitTheme.muted),
                 axis: .vertical
             )
             .lineLimit(3...6)
