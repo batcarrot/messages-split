@@ -17,6 +17,23 @@ struct AddExpenseView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
+                if isEditing {
+                    HStack {
+                        Text("Editing")
+                            .font(.system(.footnote, design: .rounded).weight(.semibold))
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button("Done") {
+                            endEditing()
+                        }
+                        .font(.system(.body, design: .rounded).weight(.bold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .background(SplitTheme.forest, in: Capsule())
+                    }
+                }
+
                 amountField
                 titleField
                 detailsField
@@ -50,47 +67,13 @@ struct AddExpenseView: View {
                 .buttonStyle(.plain)
             }
             .padding(20)
-            .padding(.bottom, isEditing ? 24 : 0)
         }
         .scrollDismissesKeyboard(.interactively)
-        .dismissKeyboardToolbar {
-            endEditing()
-        }
-        .safeAreaInset(edge: .bottom) {
-            if isEditing {
-                HStack {
-                    Text(editingHint)
-                        .font(.system(.footnote, design: .rounded))
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                    Button("Done") {
-                        endEditing()
-                    }
-                    .font(.system(.body, design: .rounded).weight(.semibold))
-                    .foregroundStyle(SplitTheme.forest)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 8)
-                    .background(.white.opacity(0.92), in: Capsule())
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .background(.ultraThinMaterial)
-            }
-        }
         .onChange(of: photoItem) { newItem in
             endEditing()
             Task {
                 await loadPhoto(from: newItem)
             }
-        }
-    }
-
-    private var editingHint: String {
-        switch focusedField {
-        case .amount: return "Enter the amount"
-        case .title: return "Name this bill"
-        case .details: return "Optional note"
-        case .none: return ""
         }
     }
 

@@ -12,38 +12,38 @@ struct ExpandedRootView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                SplitTheme.background.ignoresSafeArea()
+        ZStack {
+            SplitTheme.background.ignoresSafeArea()
 
-                VStack(spacing: 0) {
-                    header
-                    Picker("Section", selection: $tab) {
-                        ForEach(Tab.allCases, id: \.self) { item in
-                            Text(item.rawValue).tag(item)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .padding()
-                    .onChange(of: tab) { _ in
-                        Keyboard.dismiss()
-                    }
+            VStack(spacing: 0) {
+                header
 
-                    Group {
-                        switch tab {
-                        case .add:
-                            AddExpenseView(model: model)
-                        case .balances:
-                            BalancesView(model: model)
-                        case .activity:
-                            ActivityView(model: model)
-                        }
+                Picker("Section", selection: $tab) {
+                    ForEach(Tab.allCases, id: \.self) { item in
+                        Text(item.rawValue).tag(item)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .onChange(of: tab) { _ in
+                    Keyboard.dismiss()
+                }
+
+                Group {
+                    switch tab {
+                    case .add:
+                        AddExpenseView(model: model)
+                    case .balances:
+                        BalancesView(model: model)
+                    case .activity:
+                        ActivityView(model: model)
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .navigationBarHidden(true)
         }
+        .keyboardDismissBridge()
     }
 
     private var header: some View {
@@ -57,12 +57,15 @@ struct ExpandedRootView: View {
                     .foregroundStyle(SplitTheme.ink.opacity(0.75))
             }
             Spacer()
-            Button("Done") {
+            Button {
                 Keyboard.dismiss()
                 model.compact()
+            } label: {
+                Text("Close")
+                    .font(.system(.body, design: .rounded).weight(.semibold))
+                    .foregroundStyle(SplitTheme.forest)
             }
-            .font(.system(.body, design: .rounded).weight(.semibold))
-            .foregroundStyle(SplitTheme.forest)
+            .buttonStyle(.plain)
         }
         .padding(.horizontal, 20)
         .padding(.top, 12)
