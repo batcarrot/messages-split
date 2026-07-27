@@ -44,7 +44,6 @@ struct ExpandedRootView: View {
             }
         }
         .keyboardDismissBridge()
-        .environment(\.colorScheme, .light)
     }
 
     private var header: some View {
@@ -89,7 +88,7 @@ struct ActivityView: View {
                 if model.ledger.expenses.isEmpty {
                     Text("No expenses yet. Add one to start the ledger.")
                         .font(.system(.body, design: .rounded))
-                        .foregroundStyle(SplitTheme.muted)
+                        .foregroundStyle(.secondary)
                         .padding(.top, 24)
                 } else {
                     ForEach(model.ledger.expenses.reversed()) { expense in
@@ -132,14 +131,14 @@ struct ActivityView: View {
                 let via = expense.paymentMethod == .applePay ? " · Apple Pay" : " · manual"
                 Text("\(model.ledger.displayName(for: expense.paidById)) paid \(to)\(via)")
                     .font(.system(.caption, design: .rounded))
-                    .foregroundStyle(SplitTheme.muted)
+                    .foregroundStyle(.secondary)
             } else {
                 let names = expense.shares
                     .map { model.ledger.displayName(for: $0.participantId) }
                     .joined(separator: ", ")
                 Text("Paid by \(model.ledger.displayName(for: expense.paidById)) · \(names)")
                     .font(.system(.caption, design: .rounded))
-                    .foregroundStyle(SplitTheme.muted)
+                    .foregroundStyle(.secondary)
             }
         }
         .padding(14)

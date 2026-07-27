@@ -21,7 +21,7 @@ struct AddExpenseView: View {
                     HStack {
                         Text("Editing")
                             .font(.system(.footnote, design: .rounded).weight(.semibold))
-                            .foregroundStyle(SplitTheme.muted)
+                            .foregroundStyle(.secondary)
                         Spacer()
                         Button("Done") {
                             endEditing()
@@ -86,12 +86,11 @@ struct AddExpenseView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Amount")
                 .font(.system(.caption, design: .rounded).weight(.semibold))
-                .foregroundStyle(SplitTheme.muted)
+                .foregroundStyle(.secondary)
             TextField("0.00", text: $model.draftAmountText)
                 .keyboardType(.decimalPad)
-                .font(.system(size: 40, weight: .bold, design: .rounded))
+                .font(.system(size: 44, weight: .bold, design: .rounded))
                 .foregroundStyle(SplitTheme.ink)
-                .splitFieldChrome(cornerRadius: 14)
                 .focused($focusedField, equals: .amount)
                 .submitLabel(.done)
                 .onSubmit { endEditing() }
@@ -102,11 +101,11 @@ struct AddExpenseView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Title")
                 .font(.system(.caption, design: .rounded).weight(.semibold))
-                .foregroundStyle(SplitTheme.muted)
+                .foregroundStyle(.secondary)
             TextField("Dinner, taxi, groceries…", text: $model.draftTitle)
                 .font(.system(.title3, design: .rounded))
-                .foregroundStyle(SplitTheme.ink)
-                .splitFieldChrome()
+                .padding(12)
+                .background(.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                 .focused($focusedField, equals: .title)
                 .submitLabel(.done)
                 .onSubmit { endEditing() }
@@ -118,16 +117,16 @@ struct AddExpenseView: View {
             HStack {
                 Text("Description")
                     .font(.system(.caption, design: .rounded).weight(.semibold))
-                    .foregroundStyle(SplitTheme.muted)
+                    .foregroundStyle(.secondary)
                 Text("(optional)")
                     .font(.system(.caption, design: .rounded))
-                    .foregroundStyle(SplitTheme.muted.opacity(0.85))
+                    .foregroundStyle(.secondary.opacity(0.8))
             }
             TextField("Add a note, venue, or receipt details…", text: $model.draftDetails, axis: .vertical)
                 .lineLimit(3...6)
                 .font(.system(.body, design: .rounded))
-                .foregroundStyle(SplitTheme.ink)
-                .splitFieldChrome()
+                .padding(12)
+                .background(.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                 .focused($focusedField, equals: .details)
                 .submitLabel(.done)
                 .onSubmit { endEditing() }
@@ -139,10 +138,10 @@ struct AddExpenseView: View {
             HStack {
                 Text("Picture")
                     .font(.system(.caption, design: .rounded).weight(.semibold))
-                    .foregroundStyle(SplitTheme.muted)
+                    .foregroundStyle(.secondary)
                 Text("(optional)")
                     .font(.system(.caption, design: .rounded))
-                    .foregroundStyle(SplitTheme.muted.opacity(0.85))
+                    .foregroundStyle(.secondary.opacity(0.8))
             }
 
             if let image = model.draftImage {
@@ -176,10 +175,11 @@ struct AddExpenseView: View {
                         Spacer()
                         Image(systemName: "chevron.right")
                             .font(.caption.weight(.semibold))
-                            .foregroundStyle(SplitTheme.muted)
+                            .foregroundStyle(.secondary)
                     }
                     .foregroundStyle(SplitTheme.ink)
-                    .splitFieldChrome(cornerRadius: 14)
+                    .padding(14)
+                    .background(.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                 }
                 .buttonStyle(.plain)
                 .simultaneousGesture(TapGesture().onEnded { endEditing() })
@@ -191,7 +191,7 @@ struct AddExpenseView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Paid by")
                 .font(.system(.caption, design: .rounded).weight(.semibold))
-                .foregroundStyle(SplitTheme.muted)
+                .foregroundStyle(.secondary)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(model.participants) { person in
@@ -223,7 +223,7 @@ struct AddExpenseView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("On this bill")
                         .font(.system(.caption, design: .rounded).weight(.semibold))
-                        .foregroundStyle(SplitTheme.muted)
+                        .foregroundStyle(.secondary)
                     Text(model.selectedPeopleSummary)
                         .font(.system(.footnote, design: .rounded))
                         .foregroundStyle(SplitTheme.ink.opacity(0.7))
@@ -254,7 +254,7 @@ struct AddExpenseView: View {
                         VStack(alignment: .leading, spacing: 6) {
                             HStack(spacing: 6) {
                                 Image(systemName: selected ? "checkmark.circle.fill" : "circle")
-                                    .foregroundStyle(selected ? SplitTheme.forest : SplitTheme.muted)
+                                    .foregroundStyle(selected ? SplitTheme.forest : .secondary)
                                 Text(person.displayName)
                                     .lineLimit(1)
                                     .font(.system(.subheadline, design: .rounded).weight(.semibold))
@@ -262,11 +262,11 @@ struct AddExpenseView: View {
                             if selected, let perPerson = model.draftPerPersonCents {
                                 Text(model.moneyString(perPerson))
                                     .font(.system(.caption, design: .rounded))
-                                    .foregroundStyle(SplitTheme.muted)
+                                    .foregroundStyle(.secondary)
                             } else {
                                 Text(selected ? "Included" : "Tap to include")
                                     .font(.system(.caption, design: .rounded))
-                                    .foregroundStyle(SplitTheme.muted)
+                                    .foregroundStyle(.secondary)
                             }
                         }
                         .padding(12)

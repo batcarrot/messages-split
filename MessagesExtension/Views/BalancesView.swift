@@ -80,7 +80,7 @@ struct BalancesView: View {
                 .font(.system(.headline, design: .rounded))
             Text("Mark paid after you send money outside the app.")
                 .font(.system(.footnote, design: .rounded))
-                .foregroundStyle(SplitTheme.muted)
+                .foregroundStyle(.secondary)
 
             ForEach(model.myPayableSettlements) { settlement in
                 let to = model.ledger.displayName(for: settlement.toId)
@@ -118,7 +118,7 @@ struct BalancesView: View {
                 .foregroundStyle(SplitTheme.forest)
             Text("No one owes anyone right now.")
                 .font(.system(.body, design: .rounded))
-                .foregroundStyle(SplitTheme.muted)
+                .foregroundStyle(.secondary)
         }
         .padding(18)
         .frame(maxWidth: .infinity, alignment: .leading)
